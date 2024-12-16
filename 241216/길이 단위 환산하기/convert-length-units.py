@@ -1,2 +1,2 @@
 n = float(input())
-print(f"{n*3.48:.1f}")
+print(f"{n*30.48:.1f}")
