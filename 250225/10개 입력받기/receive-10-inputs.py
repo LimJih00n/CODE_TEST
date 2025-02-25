@@ -1,5 +1,5 @@
 arr = list(map(int,input().split()))
-idx = 9
+idx = 10
 for i in range(len(arr)):
     if arr[i] == 0:
         idx = i
