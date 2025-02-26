@@ -11,7 +11,7 @@ for v in per:
         hes[2]+=1
     else:
         hes[3]+=1
-if hes[0]>2:
+if hes[0]>=2:
     hes.append("E")
 for n in hes:
     print(n,end=" ")
