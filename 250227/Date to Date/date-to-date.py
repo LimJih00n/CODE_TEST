@@ -11,7 +11,8 @@ while True:
         break
     ans+=1
     d1+=1
-    if d1 == num_of_days[m1]:
+    if d1 > num_of_days[m1]:
         d1 = 1
         m1+=1
+    
 print(ans)
