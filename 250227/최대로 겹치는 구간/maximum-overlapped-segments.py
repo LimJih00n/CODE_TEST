@@ -5,5 +5,7 @@ segments = [tuple(map(int, input().split())) for _ in range(n)]
 arr = [0]*202
 for x1,x2 in segments:
     for idx in range(x1+100,x2+101):
+        if (idx==x1 or idx== x2) and arr[idx]:
+            arr[idx]-=1
         arr[idx] +=1
 print(max(arr))
