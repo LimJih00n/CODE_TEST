@@ -9,11 +9,10 @@ for _ in range(n):
 
 # Please write your code here.
 arr =[[0]*201 for _ in range(201)]
-for r in range(y1[0],y2[0]):
-    for c in range(x1[0],x2[0]):
-        arr[r+100][c+100]=1
-for r in range(y1[1],y2[1]):
-    for c in range(x1[1],x2[1]):
-        arr[r+100][c+100]=1
+for s in range(n):
+    for r in range(y1[s],y2[s]):
+        for c in range(x1[s],x2[s]):
+            arr[r+100][c+100]=1
+    
 tot = sum([sum(n) for n in arr])
 print(tot)
