@@ -15,11 +15,11 @@ for command in commands:
     if command[1] == "R":
         for idx in range(cur,cur+x):
             arr[idx+1000]+=1
-        cur = cur+x
+        cur = cur+x+1
     elif command[1] == "L":
         for idx in range(cur,cur-x,-1):
             arr[idx+1000]+=1
-        cur = cur-x
+        cur = cur-x-1
 
 ans = [1 for n in arr if n>=2]
 print(sum(ans))
