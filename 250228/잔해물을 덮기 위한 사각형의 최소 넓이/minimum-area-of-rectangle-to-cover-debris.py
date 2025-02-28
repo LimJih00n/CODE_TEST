@@ -1,0 +1,20 @@
+x1, y1, x2, y2 = [0] * 2, [0] * 2, [0] * 2, [0] * 2
+x1[0], y1[0], x2[0], y2[0] = map(int, input().split())
+x1[1], y1[1], x2[1], y2[1] = map(int, input().split())
+
+# Please write your code here.
+
+arr =[ [0]*2001 for i in range(2001)]
+
+for x in range(x1[0]+1000,x2[0]+1000):
+    for y in range(y1[0]+1000,y2[0]+1000):
+        arr[x][y] = 2
+
+for x in range(x1[1]+1000,x2[1]+1000):
+    for y in range(y1[1]+1000,y2[1]+1000):
+        arr[x][y] -= 1
+
+ans = [1 for row in arr for v in row if v>=1]
+print(sum(ans))
+    
+                
