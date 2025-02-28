@@ -4,7 +4,7 @@ m1, d1, m2, d2 = map(int, input().split())
 mon = [31,28,31,30,31,30,31,31,30,31,30,31]
 days = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"]
 start = 0
-
+dir_=1
 if m1 > m2:
     dir_ = -1
 elif m1==m2:
