@@ -10,8 +10,8 @@ for x in range(x1[0]+1000,x2[0]+1000):
     for y in range(y1[0]+1000,y2[0]+1000):
         arr[x][y] = 2
 
-for x in range(x1[1]+1000,x2[1]+1000):
-    for y in range(y1[1]+1000,y2[1]+1000):
+for x in range(x1[1]+1001,x2[1]+1000):
+    for y in range(y1[1]+1001,y2[1]+1000):
         arr[x][y] -= 1
 
 ans = [1 for row in arr for v in row if v>=1]
