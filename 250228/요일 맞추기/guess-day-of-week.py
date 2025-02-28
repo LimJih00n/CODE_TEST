@@ -17,9 +17,9 @@ while True:
         break
     d1 += dir_
     if mon[m1-1] == d1 and dir_>0:
-        d1 = 0
+        d1 = 1
         m1+=1
-    if d1 == 1 and dir_<0:
+    if d1 == 0 and dir_<0:
         m1 -= 1
         d1 = mon[m1-1]
     
