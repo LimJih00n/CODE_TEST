@@ -30,6 +30,9 @@ for r in range(len(arr)):
 
 if x1[0] == x1[1] and x2[0] == x2[1] and y1[0] == y1[1] and  y2[0] == y2[1]:
     print(0)
+elif p1x==p2x and p1y==p2y:
+    print(0)
+
 else:
     print((abs(p1x-p2x)+1)*(abs(p1y-p2y)+1))
     
