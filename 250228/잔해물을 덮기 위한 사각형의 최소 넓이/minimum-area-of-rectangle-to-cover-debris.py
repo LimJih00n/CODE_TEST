@@ -15,6 +15,9 @@ for x in range(x1[1]+1000,x2[1]+1000):
         arr[x][y] -= 1
 
 ans = [1 for row in arr for v in row if v>=1]
-print(sum(ans))
+if x1[0] == x1[1] and x2[0] == x2[1] and y1[0] == y1[1] and  y[0] == y[1]:
+    print(0)
+else:
+    print(sum(ans))
     
                 
