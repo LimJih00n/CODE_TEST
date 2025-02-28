@@ -16,7 +16,7 @@ while True:
     if m1 == m2 and d1 == d2:
         break
     d1 += dir_
-    if mon[m1-1] > d1 and dir_>0:
+    if mon[m1-1] < d1 and dir_>0:
         d1 = 1
         m1 +=1
     if d1 == 0 and dir_<0:
