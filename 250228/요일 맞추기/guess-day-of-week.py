@@ -25,7 +25,7 @@ while True:
     
 
     if dir_>0:
-        start  = start+1 if start <7 else 0
+        start  = start+1 if start < 6 else 0
     else:
         start  = start-1 if start > 0 else 6
 print(days[start])
