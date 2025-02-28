@@ -10,14 +10,27 @@ for x in range(x1[0]+1000,x2[0]+1000):
     for y in range(y1[0]+1000,y2[0]+1000):
         arr[x][y] = 2
 
-for x in range(x1[1]+1001,x2[1]+1001):
-    for y in range(y1[1]+1001,y2[1]+1001):
+for x in range(x1[1]+1000,x2[1]+1000):
+    for y in range(y1[1]+1000,y2[1]+1000):
         arr[x][y] -= 1
 
-ans = [1 for row in arr for v in row if v>=1]
+p1x = float('inf')
+p1y = float('inf')
+p2x = float('-inf')
+p2y = float('-inf')
+
+for r in range(len(arr)):
+    for c in range(len(arr[r])):
+        if arr[r][c] ==2:
+            p1x = min(p1x,r)
+            p2x = max(p2x,r)
+            p1y = min(p1y,c)
+            p2y = max(p2y,c)
+
+
 if x1[0] == x1[1] and x2[0] == x2[1] and y1[0] == y1[1] and  y2[0] == y2[1]:
     print(0)
 else:
-    print(sum(ans))
+    print((abs(p1x-p2x)+1)*(abs(p1y-p2y)+1))
     
                 
