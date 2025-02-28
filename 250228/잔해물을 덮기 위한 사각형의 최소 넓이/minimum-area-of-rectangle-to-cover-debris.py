@@ -4,7 +4,7 @@ x1[1], y1[1], x2[1], y2[1] = map(int, input().split())
 
 # Please write your code here.
 
-arr =[ [0]*2001 for i in range(2001)]
+arr =[ [0]*2002 for i in range(2002)]
 
 for x in range(x1[0]+1000,x2[0]+1000):
     for y in range(y1[0]+1000,y2[0]+1000):
