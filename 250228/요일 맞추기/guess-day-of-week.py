@@ -19,7 +19,7 @@ while True:
     if mon[m1-1] == d1 and dir_>0:
         d1 = 0
         m1+=1
-    if d1 == 0 and dir_<0:
+    if d1 == 1 and dir_<0:
         m1 -= 1
         d1 = mon[m1-1]
     
@@ -27,5 +27,5 @@ while True:
     if dir_>0:
         start  = start+1 if start <7 else 0
     else:
-        start  = start-1 if start >0 else 6
+        start  = start-1 if start > 0 else 6
 print(days[start])
