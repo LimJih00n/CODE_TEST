@@ -23,6 +23,7 @@ dir_map={
 }
 start = [r,c]
 cur_dir = d
+time_ = 0
 while True:
     result = check_b(start[0],start[1],cur_dir)
     if result =="G":
@@ -30,11 +31,11 @@ while True:
         start[1] += dir_map[cur_dir][1]
     else:
         cur_dir = result
-        start[0] += dir_map[cur_dir][0]
-        start[1] += dir_map[cur_dir][1]
+        start[0] += dir_map[cur_dir][0]*2
+        start[1] += dir_map[cur_dir][1]*2
         
-    t -= 1
-    if t==-1:
+    time_ +=1
+    if t==time_:
         break
 print(*start)
 
