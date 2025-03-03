@@ -30,11 +30,11 @@ while True:
         start[1] += dir_map[cur_dir][1]
     else:
         cur_dir = result
-        start[0] += dir_map[cur_dir][0]*2
-        start[1] += dir_map[cur_dir][1]*2
+        start[0] += dir_map[cur_dir][0]
+        start[1] += dir_map[cur_dir][1]
         
     t -= 1
-    if t==0:
+    if t==-1:
         break
 print(*start)
 
