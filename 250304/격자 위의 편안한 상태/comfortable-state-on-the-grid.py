@@ -18,7 +18,7 @@ for p in points:
         if check_b(p[0]+sdr,p[1]+sdc):
             if arr[p[0]+sdr][p[1]+sdc] == 1:
                 count+=1
-    count = 1 if count >=3 else 0
+    count = 1 if count ==3 else 0
     ans.append(count)
 for c in ans:
     print(c)
