@@ -13,31 +13,23 @@ public class Main {
         // Please write your code here.
         int ans = 0;
         for (int i =0;i<N;i++){
-            int[] arr = new int[M];
-            int idx =0;
+            int[] arr = new int[N+1];
+        
             int c = 0;
             for(int j=i;j<i+M;j++){
                 if (j>=N){
                     break;
                 }
                 c++;
-                arr[idx] = A[j];
-                idx++;
+                arr[A[j]] = 1;        
             }
             if (c != M)
                 continue;
             int count= 0;
             for(int j=0;j<M;j++){
-                
-                
-                for(int k=0;k<M;k++){
-                
-                    
-                    if(arr[k]==B[j]){
+                    if(arr[B[j]]==1){
                         count++;
                     }
-                        
-                }
             }
             //System.out.println(count);
             if(count >= M){
