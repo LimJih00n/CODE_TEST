@@ -32,7 +32,7 @@ public class Main {
                     }
             }
             //System.out.println(count);
-            if(count >= M){
+            if(count == M){
                 ans ++;
             }
         }
