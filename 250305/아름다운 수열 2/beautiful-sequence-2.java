@@ -23,8 +23,9 @@ public class Main {
                 c++;
                 arr[A[j]] = 1;        
             }
-            if (c != M)
+            if (c != M){
                 continue;
+            }
             int count= 0;
             for(int j=0;j<M;j++){
                     if(arr[B[j]]==1){
