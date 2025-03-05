@@ -3,7 +3,7 @@ arr = list(map(int, input().split()))
 
 # Please write your code here.
 ans = float("-inf")
-for i in range(1,n):
+for i in range(0,n):
     tot = 0
     for j in range(i,i+k):
         if j>=n:
