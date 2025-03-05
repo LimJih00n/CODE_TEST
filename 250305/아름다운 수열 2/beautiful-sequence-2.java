@@ -13,7 +13,7 @@ public class Main {
         // Please write your code here.
         int ans = 0;
         for (int i =0;i<N;i++){
-            int[] arr = new int[N+1];
+            int[] arr = new int[101];
         
             int c = 0;
             for(int j=i;j<i+M;j++){
