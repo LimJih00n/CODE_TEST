@@ -18,7 +18,7 @@ def compute_work(T):
     for Ta,Tb in ranges:
         if Ta >T:
             tot_work += C 
-        if Ta<=T<Tb:
+        if Ta<=T<=Tb:
             tot_work +=G
         if T>Tb:
             tot_work +=H
