@@ -9,18 +9,10 @@ how: 완전 탐색 -> 만약  ( 를 찾으면, (( 를 찾으면 다음거 찾기
 '''
 count = 0
 ans = 0
-for i in range(len(A)):
-    if A[i] =="(":
-        count +=1
-   
-         
-    if count==2:
-        check = 0
+
+for i in range(1,len(A)):
+    if A[i-1] =="(" and A[i] =="(":
         for j in range(i+1,len(A)):
-            if A[j] ==")":
-                check +=1
-            if check==2:
+            if A[j-1] ==")" and A[j] ==")":
                 ans+=1
-                check = 0
-        count =0
 print(ans)
