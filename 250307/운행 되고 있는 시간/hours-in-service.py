@@ -22,7 +22,7 @@ work_time_list=sorted(work_time_list,key=lambda x : x[0])
 def check_time(arr):
     re = 0 
     count = 0
-    for i in range(1,21):
+    for i in range(1,1001):
         if arr[i] >= 1:
             count +=1
     return count
@@ -34,7 +34,7 @@ ans = 0
 for i in range(N):
     arr = work_time_list[:]
     del arr[i]
-    check_arr = [0]*21
+    check_arr = [0]*1001
     
     
     for s,e in arr:
