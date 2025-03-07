@@ -25,7 +25,7 @@ def check_condition(n,a): #n 넣는 숫자, a 기준 숫자.
         if n==N-1 or n== N-2 or n==N or n==1 or n==2:
             return True
     elif a==N-1:
-        if n==N-2 or N==n-3 or  n==N-1 or n==N or n==1:
+        if n==N-2 or N-3==n or  n==N-1 or n==N or n==1:
             return True 
     elif a == 1:
         if n==N-1 or n== N or n==1 or n==2 or n==3:
