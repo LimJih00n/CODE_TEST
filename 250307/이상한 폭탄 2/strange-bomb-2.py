@@ -16,7 +16,7 @@ N,k = map(int,input().split())
 boams = [int(input()) for i in range(N)]
 ans = -1
 for i in range(N):
-    s = i-k if i-k < 0 else 0
+    s = i-k if i-k > 0 else 0
     e = i+k if i+k < N else N
     boam_num = boams[i]
     for j in range(s,e):
