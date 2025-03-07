@@ -12,9 +12,10 @@ for i in range(N):
     P_cur,B_cur = P[:],B 
     P_cur[i] //= 2
     P_cur.sort()
+    
     count = 0 
     for p in P_cur:
-        if B_cur - p >0:
+        if B_cur - p >=0:
             B_cur -= p 
             count +=1
         else:
