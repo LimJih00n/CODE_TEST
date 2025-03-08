@@ -38,7 +38,7 @@ ans = 0
 
 while True:
     can_move=[]
-    
+    remove_mable = []
     for marble in marbles:
         mr,mc = marble
         max_v,move_p = arr[mr][mc],(mr,mc)
@@ -51,11 +51,10 @@ while True:
             if check_b(n_mr,n_mc) and arr[n_mr][n_mc] > max_v:
                 
                 max_v = arr[n_mr][n_mc]
-               
-                    
                 move_p = ((n_mr,n_mc))
-        if move_p in can_move:
+        if move_p in can_move or move_p in remove_mable: #문제 같은 게 또 들어오면 오류 나옴 - 3개가 겹칠 수 있음
             can_move.remove(move_p)
+            remove_mable.append(move_p)
         else:
             can_move.append(move_p)
                 
