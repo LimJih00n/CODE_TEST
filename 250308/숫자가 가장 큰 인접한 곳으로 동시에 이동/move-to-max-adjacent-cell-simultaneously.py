@@ -20,6 +20,7 @@ how?
 2.이동 나타내는 배열 만들고. 겹치면 초기화
 1,2반복
 '''
+import copy
 def check_b(r,c):
     if r>=0 and c>=0 and r<n and c<n:
         return True
@@ -51,7 +52,7 @@ while True:
             if check_b(n_mr,n_mc) and arr[n_mr][n_mc] > max_v:
                 
                 max_v = arr[n_mr][n_mc]
-                move_p = ((n_mr,n_mc))
+                move_p = (n_mr,n_mc)
 
         if move_p in can_move:
             can_move.remove(move_p)
@@ -61,7 +62,7 @@ while True:
         
             
                 
-    marbles = can_move[:]
+    marbles = copy.deepcopy(can_move)
     t -= 1
     
     if t==0:
