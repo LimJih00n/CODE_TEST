@@ -55,7 +55,7 @@ while True:
         if move_p in can_move:
             can_move.remove(move_p)
             remove_mable.append(move_p)
-        if  move_p in not remove_mable: #문제 같은 게 또 들어오면 오류 나옴 - 3개가 겹칠 수 있음
+        if  move_p not in remove_mable: #문제 같은 게 또 들어오면 오류 나옴 - 3개가 겹칠 수 있음
             can_move.append(move_p)
         
             
