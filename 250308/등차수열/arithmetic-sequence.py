@@ -24,8 +24,7 @@ arr.sort()
 ans = 0
 max_count = 0
 for n in range(min_a,max_a):
-    if n in arr:
-        continue
+
     count = 0
     small_a = [a for a in arr if a<n]
     big_a =  [a for a in arr if a>n]
