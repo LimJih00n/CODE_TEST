@@ -137,7 +137,7 @@ def bfs(start_node):
             error = tiem_error[i]
             if time_==0:
                 continue
-            if error[3]%time_ == 0:
+            if time_%error[3] == 0:
                 r = error[0]
                 c = error[1]
                 space_map[0][r][c] = 1
