@@ -12,24 +12,26 @@ def move_func(map_idx,next_r,next_c):
         if next_c == M:
             re_next_c = 0
             next_map_idx = map_idx +1 if map_idx<5 else 2 
-        if next_c == -1:
+        elif next_c == -1:
             re_next_c =M-1
             next_map_idx = map_idx -1 if map_idx>2 else 5
-        if next_r<0: # -> 1
+        elif next_r<0: # -> 1
             if map_idx == 2:
-                next_map_idx == 1
+                
+                next_map_idx = 1
                 re_next_r,re_next_c  = M-1,next_c
+                
             if map_idx == 3:
-                next_map_idx == 1
+                next_map_idx = 1
                 re_next_r,re_next_c  = M-next_c-1,M-1
             if map_idx == 4:
-                next_map_idx == 1
+                next_map_idx = 1
                 re_next_r,re_next_c  = 0,M-next_c-1
             if map_idx == 5:
-                next_map_idx == 1
+                next_map_idx = 1
                 re_next_r,re_next_c  = next_c,0
         
-        if next_r>=M:
+        elif next_r>=M:
             if map_idx == 2:
                 next_map_idx = 0
                 re_next_r,re_next_c  = M+s3dr , next_c+s3dc
@@ -42,27 +44,24 @@ def move_func(map_idx,next_r,next_c):
             if map_idx == 5:
                 next_map_idx = 0
                 re_next_r,re_next_c  = s3dr+next_c,s3dc-1
-            
+    
             
     if map_idx == 1:
         if next_r>=M: # 1->2
+            
             re_next_r,re_next_c= 0,next_c
             next_map_idx = 2
-        if next_c>=M: #1->3
+        elif next_c>=M: #1->3 
             re_next_r,re_next_c = 0,M-next_r-1
             next_map_idx = 3
-        if next_r<0: #1->4
+        elif next_r<0: #1->4
             re_next_r,re_next_c=0,M-next_c-1
             next_map_idx = 4
-        if next_c<0: #1->5
+        elif next_c<0: #1->5
             re_next_r,re_next_c=0,next_r
             next_map_idx = 5
-   
     
-    if move_dir=="S":
-        return next_map_idx,re_next_r,re_next_c
     
- 
     return next_map_idx,re_next_r,re_next_c
 
 N,M,F = map(int,input().split())
@@ -120,7 +119,7 @@ def check_b(r,c,n):
 def bfs(start_node):
     queue= collections.deque()
     visted = set()
-    queue.append((start_node,1))
+    queue.append((start_node,0))
     visted.add(start_node)
     
     move_dir =[
@@ -133,9 +132,11 @@ def bfs(start_node):
     
     while queue:
         cur_node,time_ = queue.popleft()
-        
+#        print(cur_node)
         for i in range(len(tiem_error)): # 시간 이상 전이 현상
             error = tiem_error[i]
+            if time_==0:
+                continue
             if error[3]%time_ == 0:
                 r = error[0]
                 c = error[1]
@@ -149,11 +150,13 @@ def bfs(start_node):
         for i in range(4):
             if cur_node[0] != 0:
                 cur_dim,nr,nc = cur_node[0],cur_node[1]+move_dir[i][0],cur_node[2]+move_dir[i][1]
+                
                 next_dim,next_r,next_c = move_func(cur_dim,nr,nc)
                 next_node = (next_dim,next_r,next_c)
-                
+         #      print((cur_dim,nr,nc),"->",next_node)
                 
                 if space_map[next_dim][next_r][next_c] != 1 and next_node not in visted:
+          #          print("in",next_node)
                     queue.append((next_node,time_+1))
                     visted.add((cur_dim,nr,nc))
             else:
@@ -174,7 +177,7 @@ def bfs(start_node):
 
 def print_all_map():
     
-    for i in range(5):
+    for i in range(6):
         print("===",i,"===")
         for row in space_map[i]:
             print(* row)
@@ -185,10 +188,14 @@ ans = bfs(start_node)
 if ans == -1:
     print(-1)
 else:
-    print(ans-1)
+    print(ans)
 
-
-#print(move_func(3,3,0))
+'''
+print(move_func(2,-1,2)) # 1->4 ok
+print(move_func(3,-1,2)) #1->5 ok
+print(move_func(4,-1,2))  #1->3 okf
+print(move_func(5,-1,2)) #1->2 ok
+'''
 
 '''
 print(move_func(1,-1,2)) # 1->4 ok
