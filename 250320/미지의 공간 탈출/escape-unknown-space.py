@@ -129,19 +129,25 @@ def bfs(start_node):
         (-1,0),
         (0,0)
     ]
-    
+    real_time =0
     while queue:
         cur_node,time_ = queue.popleft()
+        if real_time !=time_:
+            real_time=time_
 #        print(cur_node)
         for i in range(len(tiem_error)): # 시간 이상 전이 현상
             error = tiem_error[i]
-            if time_==0:
+            if real_time==0:
                 continue
-            if time_%error[3] == 0:
+            
+            
+            if real_time%error[3] == 0:
+                #print(real_time,error)
                 r = error[0]
                 c = error[1]
                 space_map[0][r][c] = 1
                 nr,nc = r+move_dir[error[2]][0],c+move_dir[error[2]][1]
+                error[3] = error[3]+error[3]
                 if check_b(nr,nc,N) and space_map[0][nr][nc] != 1 and space_map[0][nr][nc] != 4:
                     error[0],error[1] = nr ,nc 
                 else:
@@ -160,7 +166,11 @@ def bfs(start_node):
                     queue.append((next_node,time_+1))
                     visted.add((cur_dim,nr,nc))
             else:
+                if space_map[0][cur_node[1]][cur_node[2]] == 4:
+                    return time_+1
                 cur_dim,nr,nc = cur_node[0],cur_node[1]+move_dir[i][0],cur_node[2]+move_dir[i][1]
+                
+                
                 next_node = (cur_dim,nr,nc)
                 if check_b(nr,nc,N) and space_map[0][nr][nc] != 1 and next_node not in visted:
                     if space_map[0][nr][nc] == 4:
