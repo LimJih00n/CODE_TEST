@@ -181,8 +181,12 @@ def print_all_map():
 print_all_map()
 '''
 
+ans = bfs(start_node)
+if ans == -1:
+    print(-1)
+else:
+    print(ans-1)
 
-print(bfs(start_node)-1)
 
 #print(move_func(3,3,0))
 
@@ -213,6 +217,4 @@ print(move_func(5,3,1))#5->0 x (4,1)
 #print(move_func(5,2,-1)) # 정답: 4,1
 #print(move_func(4,3,0))  # 5,2 ok v
 '''
-
-
 
