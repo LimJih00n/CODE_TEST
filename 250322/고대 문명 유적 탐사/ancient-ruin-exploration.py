@@ -36,6 +36,7 @@ cf: 선택된 격자는 항상 회전해야한다., 유물 1차 획득의 가치
 
 '''
 
+
 import collections
 import copy
 
@@ -151,8 +152,8 @@ while True:
     max_count=0
     cur_turn = 4
     # find degree and r,c
-    for r in range(1,4):
-        for c in range(1,4):
+    for c in range(1,4):
+        for r in range(1,4):
             temp_arr = copy.deepcopy(arr)
             temp_arr = turn_arr(temp_arr,r,c)
             tot_tre_count,tot_tre_path=compute_tresure(temp_arr)
@@ -204,13 +205,14 @@ while True:
     tot_tre_path = sorted(tot_tre_path,key = lambda x:(x[1],-x[0]))
     
     while tot_tre_count!=0:
-        
+        #print_arr(arr)
+        #print(tot_tre_path)
         ans += tot_tre_count
         for pos in tot_tre_path:
-            
+            #print(sub_tre_idx,sub_tre[sub_tre_idx])
             arr[pos[0]][pos[1]] = sub_tre[sub_tre_idx]
             sub_tre_idx+=1
-    
+        #print_arr(arr)
         tot_tre_count,tot_tre_path=compute_tresure(arr)
         tot_tre_path = sorted(tot_tre_path,key = lambda x:(x[1],-x[0]))
     K-=1
