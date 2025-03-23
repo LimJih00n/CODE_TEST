@@ -180,7 +180,7 @@ def look_e(r,c,arr):
 # 침범하는 경우 발생..
 
 def check_over_for(r):
-    if r<1:
+    if r<2:
         return True
     return False
 
