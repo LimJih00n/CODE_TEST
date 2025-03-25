@@ -128,7 +128,7 @@ def check_can_move(knight,knights,dir_):
     queue.append(copy.deepcopy(knight)) # copy해서 넣음. 
     
     col_knights=[]
-    
+    non_move = False
     while queue:
         cur_knight = queue.popleft()
         
@@ -154,18 +154,11 @@ def check_can_move(knight,knights,dir_):
         else: # 하나라도벾에 부딫힌 상황 
             
             col_knights.clear()
+            non_move=True
             break
-    
-    if len(col_knights) == 0: # 안 부딫히고 이동하는 경우를 빼먹음.
-        for kn in knights:
-            if kn.k_num == knight.k_num:
-                knights.remove(kn)
-    
-        cur_r = knight.r
-        cur_c = knight.c  
-        knight.set_new_p(cur_r+move_dir[dir_][0],cur_c+move_dir[dir_][1])
-        knights.append(knight)
+    if non_move:
         return knights
+
     # 이동이 가능한 경우 
     
     
