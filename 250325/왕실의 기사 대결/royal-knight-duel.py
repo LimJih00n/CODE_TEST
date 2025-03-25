@@ -57,6 +57,10 @@ or 이동했을때 => 그 칸에 있는지 확인 => 넣기(queue) => 다시 다
 넣어두고 사용하기 기사수 30개라 많지 않음
 또는 이동후 기사들에 대해서 칸을 일일이 계산해줘야함. 이동한 기사의 범위안에 들어가는지. 
 두개의 범위가 겹쳐야한다. => 즉 칸의 이동시 크기를 다 이동시켜야함 => 그냥 r,c 기준으로 범위 check 하기. 
+
+
+case의 생각. 
+그냥 이동할 수도 있음
 '''
 import collections 
 import copy
@@ -152,7 +156,15 @@ def check_can_move(knight,knights,dir_):
             col_knights.clear()
             break
     
-    if len(col_knights) == 0:
+    if len(col_knights) == 0: # 안 부딫히고 이동하는 경우를 빼먹음.
+        for kn in knights:
+            if kn.k_num == knight.k_num:
+                knights.remove(kn)
+    
+        cur_r = knight.r
+        cur_c = knight.c  
+        knight.set_new_p(cur_r+move_dir[dir_][0],cur_c+move_dir[dir_][1])
+        knights.append(knight)
         return knights
     # 이동이 가능한 경우 
     
