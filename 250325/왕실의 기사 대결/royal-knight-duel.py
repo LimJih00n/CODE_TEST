@@ -94,10 +94,10 @@ class knight:
         
     def check_coll(self, knight):
     # 두 사각형이 겹치지 않는 조건 체크
-        if (self.c + self.w <= knight.c or 
-            knight.c + knight.w <= self.c or 
-            self.r + self.h <= knight.r or 
-            knight.r + knight.h <= self.r):
+        if (self.c + self.w < knight.c or 
+            knight.c + knight.w < self.c or 
+            self.r + self.h < knight.r or 
+            knight.r + knight.h < self.r):
             return False
         else:
             return True
