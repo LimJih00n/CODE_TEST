@@ -86,19 +86,21 @@ class knight:
         for r in range(nr,nr+self.h):
             for c in range(nc,nc+self.w):
                 if arr[r][c] == 2:
+                    #print("col_wall",(r,c))
                     return False
         
         self.r,self.c = nr,nc  
         return True
         
-    def check_coll(self,knight): 
-        
-        # k.r < r < k.r+h 
-        # k.c < c < k.c + w 
-        # r < k.r < r+h
-        # c < k.c < c+h
-        
-        return (knight.r <= self.r <= (knight.r + knight.h-1)) and (knight.c <= self.c <= (knight.c + knight.w-1)) or (self.r <= knight.r <= (self.r + self.h-1) and self.c <= knight.c <= (self.c + self.w-1))
+    def check_coll(self, knight):
+    # 두 사각형이 겹치지 않는 조건 체크
+        if (self.c + self.w <= knight.c or 
+            knight.c + knight.w <= self.c or 
+            self.r + self.h <= knight.r or 
+            knight.r + knight.h <= self.r):
+            return False
+        else:
+            return True
     
     def compute_knight_dam(self):
         count = 0 
@@ -139,8 +141,9 @@ def check_can_move(knight,knights,dir_):
         #문제: 한번 충돌하고 넣음 -> 그 애 연쇄적으로 일어남?
         
         if cur_knight.set_new_p(cur_r+move_dir[dir_][0],cur_c+move_dir[dir_][1]): # 벽에 부딫히는지 확인 후 이동하기. 
-            
+            #cur_knight.print_state()
             for kn in knights:
+                #kn.print_state()
                 if kn.k_num == cur_knight.k_num:
                     continue
                 if cur_knight.check_coll(kn):
@@ -217,6 +220,15 @@ for r in range(L):
     for c in range(L):
         arr[r+1][c+1] = input_arr[r][c]
 
+def print_war_arr(arr):
+    arr_c = copy.deepcopy(arr)
+    for kn in all_knights:
+        for r in range(kn.r,kn.r+kn.h):
+            for c in range(kn.c,kn.c+kn.w): 
+                arr_c[r][c] = kn.k_num+2
+    print_arr(arr_c)    
+
+
 def print_arr(arr):
     print("="*len(arr))
     for row in arr:
@@ -234,6 +246,7 @@ check_can_move(명령받는 기사,복사,방향) => all_knight바꾸기.
 마지막에 초기 상태와 현재 상태를 비교해서 정답내기 
 
 '''
+#print_war_arr(arr)
 
 for com in command_info:
     
@@ -247,6 +260,7 @@ for com in command_info:
         all_knights = check_can_move(move_knight,copy.deepcopy(all_knights),com[1])
     
     #print_knights_state(all_knights)
+    #print_war_arr(arr)
 
 ans = 0
 
