@@ -50,23 +50,23 @@ NxN r,c (1,1) 시작
 '''
 import copy
 
-N = 5
+
 def find_min_square(man_pos,goal_po):
 
     
     #좌표를 담고 있으니까 그냥 범위안에 좌표가 있는지 확인하면 빠르다.
     
-    for n in range(2,N):
+    for n in range(2,NN):
         
-        for r in range(N):
+        for r in range(NN):
             
             
-            if r+n>N:
+            if r+n>NN:
                 break
             
-            for c in range(N):
+            for c in range(NN):
                 is_e,is_m=False,False
-                if c+n>N:
+                if c+n>NN:
                     break
                 
                 for po in man_pos:
@@ -202,10 +202,13 @@ def print_now_state(man_pos,goal_po,arr):
     print_arr(p_arr)
 
 def find_goal_roc(arr):
-    for r in range(N):
-        for c in range(N):
+    
+    for r in range(NN):
+        for c in range(NN):
+            
             if arr[r][c] == "x":
                 return (r,c)
+    
 
 
 '''
@@ -259,6 +262,9 @@ def game_logic(arr,man_pos,K):
             if new_po != goal_po:
                 new_man_pos.append(new_po)
         
+        if len(new_man_pos)==0:
+            return move_dist,goal_po
+        
         #print("cur_dis",move_dist)
         fr,fc,fn=find_min_square(new_man_pos,goal_po)
         #print("sq",fr,fc,fn)
@@ -277,6 +283,7 @@ man_pos = [list(map(int,input().split())) for i in range(MM)]
 man_pos = [(po[0]-1,po[1]-1) for po in man_pos]
 goal_po = list(map(int,input().split()))
 arr[goal_po[0]-1][goal_po[1]-1]="x"
+
 #print_arr(arr)
 dist,pos = game_logic(arr,man_pos,KK)
 print(dist)
