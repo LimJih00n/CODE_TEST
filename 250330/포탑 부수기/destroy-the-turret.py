@@ -305,14 +305,21 @@ def game_logic(tarrets,tarrets_live_po,tarrets_death_po,K):
         tarrets,tarrets_live_po,tarrets_death_po = check_compute_tarret(tarrets,tarrets_live_po,tarrets_death_po)
         #print("c2",tarrets)
         if len(tarrets)==1:
+            
             break
         for t in revise_tarrets:
             t[2] +=1
             
         #print_now_tarret(tarrets)
-        
+    #ans 자체를 잘못 생각함
+    #arr로 보면 저게 맞을지 몰라도 나는 point로 보고 있었음.... row가 아님 => 결과 항상 잘 나오는지check하기.    
+    #로직 완전 의심하면서 check하기
     #print_now_tarret(tarrets)
-    return max([max(row) for row in tarrets])
+    ans = 0
+    for t in tarrets:
+        ans = max(ans,t[2])
+    
+    return ans
         
         
 print(game_logic(tarrets,tarrets_live_po,tarrets_death_po,K))
