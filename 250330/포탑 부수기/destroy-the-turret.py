@@ -131,7 +131,7 @@ def check_over_flow(r,c):
         nc = M-1
     return nr,nc
     
-
+#문제: 바로 raser가 가능 경우우
 def make_raser_path(attacker,depender):
     visted = set()
     queue = collections.deque()
@@ -150,6 +150,7 @@ def make_raser_path(attacker,depender):
     ]
     re_len = M*N 
     re =[]
+    find_path = False
     while queue:
         cur_node,path_ = queue.popleft()
         
@@ -161,6 +162,8 @@ def make_raser_path(attacker,depender):
                     if re_len > len(path_):
                         re_len = len(path_)
                         re = path_
+                        find_path = True
+                        
                 else:
                     path_.append((nr,nc))
                     queue.append(((nr,nc),path_[:]))
@@ -168,9 +171,9 @@ def make_raser_path(attacker,depender):
                     path_.pop()
                     
                 
-    if len(re)!=0:
-        return re
-    return []
+    
+    return find_path,re 
+    
 
                 
             
@@ -227,6 +230,14 @@ def compute_dem(attacker,depender,path,tarrets):
                 
                 if (node not in path) and (node != attacker_node) and (node != depender_node) and (tarrets[t] not in revise_tarrets):
                     revise_tarrets.append(tarrets[t])
+    if len(path)==0:
+        for t in range(len(tarrets)):
+            node = (tarrets[t][0],tarrets[t][1])
+            
+            if (node not in path) and (node != attacker_node) and (node != depender_node) and (tarrets[t] not in revise_tarrets):
+                revise_tarrets.append(tarrets[t])
+        
+    
     
     return tarrets,revise_tarrets
 
@@ -240,6 +251,12 @@ N,M,K = map(int,input().split())
 
 arr = [list(map(int,input().split())) for i in range(N)]
 
+
+'''
+raser로 옆에 있는 거 때릴경우 path가 안나옴 근데 이럴경우에는 데미지는 들어가나
+revise를 제대로 못해줌. 왜냐하면 path를 확인하면서 보기때문
+즉 모든 경우에 대해 path가 있을 것이라 생각한 것은 패착.
+'''
 
 for r in range(N):
     for c in range(M):
@@ -261,6 +278,7 @@ def game_logic(tarrets,tarrets_live_po,tarrets_death_po,K):
     tarrets,tarrets_live_po,tarrets_death_po = check_compute_tarret(tarrets,tarrets_live_po,tarrets_death_po)
     
     for k in range(1,K+1):
+        #print("===============================",k)
         revise_tarrets=[]
         tarrets = sorted(tarrets, key = lambda x:(x[2],-x[3],-x[4],-x[5]))
         #print("ff",tarrets)
@@ -273,8 +291,9 @@ def game_logic(tarrets,tarrets_live_po,tarrets_death_po,K):
         
         
         
-        attack_path = make_raser_path(tarrets[0],tarrets[-1])
-        if len(attack_path) == 0:
+        find_path,attack_path = make_raser_path(tarrets[0],tarrets[-1])
+        if not find_path: # 없다고 인식해버림 => 이런 거 주의. 길이가 즉 바로 가는 경우에 대해서도 생각해야한다.
+            #print("boom!")
             attack_path = make_boom_path(tarrets[0],tarrets[-1])
         
         #print_simul_path(arr,attack_path)
@@ -291,6 +310,8 @@ def game_logic(tarrets,tarrets_live_po,tarrets_death_po,K):
             t[2] +=1
             
         #print_now_tarret(tarrets)
+        
+    #print_now_tarret(tarrets)
     return max([max(row) for row in tarrets])
         
         
