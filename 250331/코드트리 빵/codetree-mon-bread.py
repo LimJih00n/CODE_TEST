@@ -56,31 +56,59 @@ bfs사용
 
 바깥에 있다는 것을 어떻게 인지?
 
+틀림 => 시간초과 나옴=> 이유: 매번 bfs를 돌렸기 때문에.. 
+
+방법1. 초기 path를 정해둔다. 만약 가는길이 막힌다면 path를 수정한다. 
+
 '''
 import collections 
 
 
 def game_logic(man_pos,goal_conv_pos,allive_pos,base_camps,wall_pos):
     t=0
+    man_move_paths = [[] for i in range(M)]
+    is_make_wall = False
+    
     while True:
         next_wall_pos = wall_pos[:]
+        
+        if is_make_wall:
+            for i in range(len(man_pos)):
+                if man_pos[i] in allive_pos:
+                    continue
+                if man_pos[i] == (-1,-1):
+                    continue
+                move_path,dist = find_min_path_point(man_pos[i],goal_conv_pos[i],wall_pos)
+                
+                man_move_paths[i] = move_path
+        
+        is_make_wall = False
+        
         for i in range(len(man_pos)):
-            if man_pos in allive_pos:
+            if man_pos[i] in allive_pos:
                 continue
-            if man_pos == (-1,-1):
+            if man_pos[i] == (-1,-1):
                 continue
             
-            move_pos,dist = find_min_path_point(man_pos[i],goal_conv_pos[i],wall_pos)
-            if dist == 1:
+            
+            
+            man_pos[i] = man_move_paths[i][0]
+            
+            
+            
+            if man_pos[i] == goal_conv_pos[i]:
                 allive_pos.append(goal_conv_pos[i])
-                next_wall_pos.append(goal_conv_pos[i])
-            man_pos[i] = move_pos
+                next_wall_pos.append(goal_conv_pos[i])    
+                is_make_wall = True
+            
+            del man_move_paths[i][0]
             
         if t<M:
             
             base_point = find_near_camp(base_camps,goal_conv_pos[t],wall_pos)
             man_pos[t] = base_point
             next_wall_pos.append(base_point)
+            is_make_wall = True
         
         wall_pos = next_wall_pos[:]    
         
@@ -143,9 +171,9 @@ def find_min_path_point(po,goal_po,wall_pos): # 가장 가까운 칸과 남은 �
                 path_.append((nr,nc))
                 queue.append(((nr,nc),path_[:]))
                 if (nr,nc) == goal_po:
-                    return path_[0],len(path_)
+                    return path_,len(path_)
                 path_.pop()
-    return po,0 
+    return [po],0 
 
 
 def print_arr(arr):
