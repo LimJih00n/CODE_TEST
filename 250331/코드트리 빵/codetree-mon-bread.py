@@ -1,4 +1,13 @@
 '''
+피드백
+1. list, tuple 좌표 같게 하는 거 주의
+2. list에 tuple만 들었을때는 [:]로 복사 가능
+3. 시간초과 => 또나온다.. 
+
+
+------------------------------------------
+
+
 m명의 사람이 있다. i분에 출발한다. 각자의 베이스 캠프에서 편의점으로
 출반시간이 되기전에는 격자 밖에 있다.
 목표로 하는 편의점은 다르다. nxn 크기의 격자에서 움직인다.
@@ -152,8 +161,8 @@ def check_b(r,c):
 def find_min_path_point(po,goal_po,wall_pos): # 가장 가까운 칸과 남은 거리를 반환한다. 편의점을 도착한 경우는 한칸이고 길이가 1이다.
     #po와 goal po간의 거리와 최단 경로를 위한 다음칸을 반환한다.
     queue = collections.deque()
-    visted = set() 
-    visted.add(po)
+    visted = [[False] *N for i in range(N)]
+    visted[po[0]][po[1]] = True
     path_=[]
     queue.append((po,path_))
     
@@ -170,8 +179,8 @@ def find_min_path_point(po,goal_po,wall_pos): # 가장 가까운 칸과 남은 �
         for move in move_dir:
             nr,nc = cur_node[0]+move[0],cur_node[1]+move[1]
             
-            if (nr,nc) not in wall_pos and check_b(nr,nc) and (nr,nc) not in visted:
-                visted.add((nr,nc))
+            if (nr,nc) not in wall_pos and check_b(nr,nc) and not visted[nr][nc]:
+                visted[nr][nc] = True
                 path_.append((nr,nc))
                 queue.append(((nr,nc),path_[:]))
                 if (nr,nc) == goal_po:
