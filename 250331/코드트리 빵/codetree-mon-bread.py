@@ -78,9 +78,11 @@ def game_logic(man_pos,goal_conv_pos,allive_pos,base_camps,wall_pos):
                     continue
                 if man_pos[i] == (-1,-1):
                     continue
+                #print(man_pos[i],goal_conv_pos[i])
                 move_path,dist = find_min_path_point(man_pos[i],goal_conv_pos[i],wall_pos)
-                
+                #print(dist,wall_pos)
                 man_move_paths[i] = move_path
+            #print(man_move_paths)
         
         is_make_wall = False
         
@@ -104,7 +106,7 @@ def game_logic(man_pos,goal_conv_pos,allive_pos,base_camps,wall_pos):
             del man_move_paths[i][0]
             
         if t<M:
-            
+            wall_pos = next_wall_pos[:]
             base_point = find_near_camp(base_camps,goal_conv_pos[t],wall_pos)
             man_pos[t] = base_point
             next_wall_pos.append(base_point)
@@ -138,6 +140,7 @@ def find_near_camp(base_camps,goal_po,wall_pos):
                     my_base = camp
     
     base_camps.remove(my_base)
+    
     return my_base
 
 
@@ -161,6 +164,7 @@ def find_min_path_point(po,goal_po,wall_pos): # 가장 가까운 칸과 남은 �
         (1,0)
     ]
     
+    
     while queue:
         cur_node,path_ = queue.popleft()
         for move in move_dir:
@@ -173,7 +177,7 @@ def find_min_path_point(po,goal_po,wall_pos): # 가장 가까운 칸과 남은 �
                 if (nr,nc) == goal_po:
                     return path_,len(path_)
                 path_.pop()
-    return [po],0 
+    return [po],N*N
 
 
 def print_arr(arr):
