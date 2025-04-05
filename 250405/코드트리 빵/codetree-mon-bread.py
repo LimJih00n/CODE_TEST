@@ -89,13 +89,11 @@ def compute_dist(start_node,N,wall_pos):
 def game_logic(man_pos,conv_pos,base_pos,wall_pos,N,M):
     alive_pos = []
     t = 0
-    c=10
+    
     while True:
-        if c<0:
-            break
-        c-=1
+        
         next_wall_pos = wall_pos[:]
-        '''
+
         print("=================t",t,"=============")
         print("m",man_pos)
         print("w",wall_pos)
@@ -103,7 +101,7 @@ def game_logic(man_pos,conv_pos,base_pos,wall_pos,N,M):
         print("g",conv_pos)
         print("b",base_pos)
         print_simul(man_pos, conv_pos, base_pos, wall_pos, N, M)
-        '''
+
 
         for i in range(M):
             if man_pos[i] == (-1,-1) or man_pos[i] in alive_pos:
@@ -127,8 +125,6 @@ def game_logic(man_pos,conv_pos,base_pos,wall_pos,N,M):
         if t<M:
 
             dist_arr = compute_dist(conv_pos[t], N, wall_pos)
-
-
 
             min_dist = N * N
             next_pos = base_pos[0]
