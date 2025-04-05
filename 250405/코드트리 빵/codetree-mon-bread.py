@@ -3,6 +3,10 @@
 피드백2: 거리 bfs 잘못 구함. dist를 무한으로 초기화해야했음 start node 0으로 둬야함.
 피드백3: test하러 둔 거 조심 하기 c조건 내가 두고 안지움 test code는 잘 지우거나 따로 환경 만들자
 
+피드백4: 사람이 같은 칸에 있을 수 있다. 근데 그칸이 도착 칸일 수 있다 이럴 경우 건너뛰게 된다. 즉 편의점이 될 경우의 문제
+=>
+
+
 문제 분석
 nxn 칸에서 이루어짐
 m명의 사람과 m명의 편의점
@@ -91,26 +95,36 @@ def compute_dist(start_node,N,wall_pos):
 def game_logic(man_pos,conv_pos,base_pos,wall_pos,N,M):
     alive_pos = []
     t = 0
+    c=100
+
+
 
     while True:
 
         next_wall_pos = wall_pos[:]
-        '''
-        print("=================t",t,"=============")
-        print("m",man_pos)
-        print("w",wall_pos)
-        print("a",alive_pos)
-        print("g",conv_pos)
-        print("b",base_pos)
-        print_simul(man_pos, conv_pos, base_pos, wall_pos, N, M)
-        '''
+
+
 
         for i in range(M):
-            if man_pos[i] == (-1,-1) or man_pos[i] in alive_pos:
+
+
+            if man_pos[i] == (-1,-1) or man_pos[i] == conv_pos[i]:
+
                 continue
+
             dist_arr = compute_dist(conv_pos[i],N,wall_pos)
 
-
+            '''
+            print(man_pos[i],conv_pos[i])
+            
+            print("m", man_pos)
+            print("w", wall_pos)
+            print("a", sorted(alive_pos))
+            print("g", conv_pos)
+            print("b", base_pos)
+            print_simul(man_pos, conv_pos, base_pos, wall_pos, N, M)
+            '''
+            
             cur_node = man_pos[i]
             min_dist = N*N
             next_pos = cur_node
@@ -137,22 +151,26 @@ def game_logic(man_pos,conv_pos,base_pos,wall_pos,N,M):
             next_wall_pos.append(next_pos)
             man_pos[t] = next_pos
             base_pos.remove(next_pos)
-        wall_pos = next_wall_pos[:]
+            wall_pos = next_wall_pos[:]
         t+=1
 
-        if len(alive_pos) ==M:
+        if len(alive_pos) == M:
             break
     return t
 
 def print_simul(man_pos,conv_pos,base_pos,wall_pos,N,M):
     c_arr = [row[:] for row in arr]
-    for po in man_pos:
-        if po!=(-1,-1):
-            c_arr[po[0]][po[1]] = 2
+
 
 
     for po in wall_pos:
         c_arr[po[0]][po[1]] = 3
+
+    for po in man_pos:
+        if po!=(-1,-1):
+            c_arr[po[0]][po[1]] = 2
+    for po in conv_pos:
+        c_arr[po[0]][po[1]] = 5
     print_arr(c_arr)
 
 
