@@ -68,28 +68,32 @@ def compute_dist(start_node,N,wall_pos):
     visted = [[False]*N for _ in range(N)]
     visted[start_node[0]][start_node[1]] = True
     queue = collections.deque()
-    queue.append(start_node)
-    dist_arr = [[0]*N for _ in range(N)]
+    queue.append((start_node,0))
+    dist_arr = [[N*N]*N for _ in range(N)]
+    dist_arr[start_node[0]][start_node[1]] = 0
+    # 거리 구하는 거 잘못됨 가지 않는 칸이 0으로 측정됨
+    # 따라서 현재 거리를 담고 있을 필요가 있음
 
 
     while queue:
-        cur_node = queue.popleft()
+        cur_node,cur_dist = queue.popleft()
 
         for i in range(4):
             next_r,next_c = move_dir[i][0]+cur_node[0],move_dir[i][1]+cur_node[1]
             if check_B(next_r,next_c,N) and not visted[next_r][next_c] and (next_r,next_c) not in wall_pos:
                 visted[next_r][next_c] = True
-                dist_arr[next_r][next_c] = dist_arr[cur_node[0]][cur_node[1]] + 1
-                queue.append((next_r,next_c))
+                dist_arr[next_r][next_c] = cur_dist + 1
+                queue.append(((next_r,next_c),cur_dist+1))
     return dist_arr
 
 def game_logic(man_pos,conv_pos,base_pos,wall_pos,N,M):
     alive_pos = []
     t = 0
-
+    c=10
     while True:
-
-
+        if c<0:
+            break
+        c-=1
         next_wall_pos = wall_pos[:]
         '''
         print("=================t",t,"=============")
@@ -100,10 +104,13 @@ def game_logic(man_pos,conv_pos,base_pos,wall_pos,N,M):
         print("b",base_pos)
         print_simul(man_pos, conv_pos, base_pos, wall_pos, N, M)
         '''
+
         for i in range(M):
             if man_pos[i] == (-1,-1) or man_pos[i] in alive_pos:
                 continue
             dist_arr = compute_dist(conv_pos[i],N,wall_pos)
+
+
             cur_node = man_pos[i]
             min_dist = N*N
             next_pos = cur_node
@@ -120,6 +127,9 @@ def game_logic(man_pos,conv_pos,base_pos,wall_pos,N,M):
         if t<M:
 
             dist_arr = compute_dist(conv_pos[t], N, wall_pos)
+
+
+
             min_dist = N * N
             next_pos = base_pos[0]
             for pos in base_pos:
