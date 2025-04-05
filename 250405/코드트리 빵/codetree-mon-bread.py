@@ -166,8 +166,7 @@ for i in range(M):
     conv_pos[i][1] -= 1
     conv_pos[i] = (conv_pos[i][0],conv_pos[i][1])
     man_pos.append((-1,-1))
-print(conv_pos)
-print(base_pos)
+
 print(game_logic(man_pos,conv_pos,base_pos,wall_pos,N,M))
 
 
