@@ -1,4 +1,6 @@
 '''
+피드백: 문제조건하나 까먹음: 2의 단계에서 벽이 생성 되는 것 이었음
+
 문제 분석
 nxn 칸에서 이루어짐
 m명의 사람과 m명의 편의점
@@ -87,7 +89,17 @@ def game_logic(man_pos,conv_pos,base_pos,wall_pos,N,M):
 
     while True:
 
+
         next_wall_pos = wall_pos[:]
+        '''
+        print("=================t",t,"=============")
+        print("m",man_pos)
+        print("w",wall_pos)
+        print("a",alive_pos)
+        print("g",conv_pos)
+        print("b",base_pos)
+        print_simul(man_pos, conv_pos, base_pos, wall_pos, N, M)
+        '''
         for i in range(M):
             if man_pos[i] == (-1,-1) or man_pos[i] in alive_pos:
                 continue
@@ -104,7 +116,7 @@ def game_logic(man_pos,conv_pos,base_pos,wall_pos,N,M):
                 alive_pos.append(next_pos)
                 next_wall_pos.append(next_pos)
             man_pos[i] = next_pos
-
+        wall_pos = next_wall_pos[:]
         if t<M:
 
             dist_arr = compute_dist(conv_pos[t], N, wall_pos)
@@ -116,6 +128,7 @@ def game_logic(man_pos,conv_pos,base_pos,wall_pos,N,M):
                     next_pos = pos
             next_wall_pos.append(next_pos)
             man_pos[t] = next_pos
+            base_pos.remove(next_pos)
         wall_pos = next_wall_pos[:]
         t+=1
 
@@ -123,7 +136,19 @@ def game_logic(man_pos,conv_pos,base_pos,wall_pos,N,M):
             break
     return t
 
-def check_conv(arr):
+def print_simul(man_pos,conv_pos,base_pos,wall_pos,N,M):
+    c_arr = [row[:] for row in arr]
+    for po in man_pos:
+        if po!=(-1,-1):
+            c_arr[po[0]][po[1]] = 2
+
+
+    for po in wall_pos:
+        c_arr[po[0]][po[1]] = 3
+    print_arr(c_arr)
+
+
+def check_base(arr):
     base_pos = []
     for r in range(N):
         for c in range(N):
@@ -133,7 +158,7 @@ def check_conv(arr):
 N,M = map(int,input().split())
 arr = [list(map(int,input().split())) for _ in range(N)]
 conv_pos = [list(map(int,input().split())) for _ in range(M)]
-base_pos = check_conv(arr)
+base_pos = check_base(arr)
 man_pos = []
 wall_pos = []
 for i in range(M):
@@ -141,8 +166,8 @@ for i in range(M):
     conv_pos[i][1] -= 1
     conv_pos[i] = (conv_pos[i][0],conv_pos[i][1])
     man_pos.append((-1,-1))
-#print(conv_pos)
-#print(base_pos)
+print(conv_pos)
+print(base_pos)
 print(game_logic(man_pos,conv_pos,base_pos,wall_pos,N,M))
 
 
