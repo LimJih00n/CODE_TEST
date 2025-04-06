@@ -67,6 +67,8 @@ n+1~2n: 열커지는 순으로 행 작아지게
 i번째(0부터 시작) 에가 i번째 애임
 
 
+문제 - 꼬리-꼬리일 경우 안움직일 수 있음.
+
 구현1.
 이동 로직 정리 => 1 2222 3 으로 arr에는 두기.
 man_pos
@@ -87,6 +89,10 @@ def print_arr(arr):
         print(*row)
 
 
+# 예외처리 쭉이어진 경우에 대해서.
+# 내가 움직이는 경우가 무언가 빠트린게 있는지 비판적으로 생각해야한다. 4가 아닌경우도 있을 수 있지 않나?
+# 꼬리랑 머리가 맡닿아 있는 경우 예외처리 필요. => 3이여도 움직이게 하기.  결국 돌아온다.
+
 
 def move_to_line(man_pos,arr,N):
 
@@ -96,8 +102,9 @@ def move_to_line(man_pos,arr,N):
             cur_r, cur_c = man_pos[i]
             for sr,sc in zip(dr,dc):
                 next_r,next_c = cur_r+sr,cur_c+sc
-                if check_b(next_r,next_c,N) and arr[next_r][next_c] == 4:
-                    arr[next_r][next_c],arr[cur_r][cur_c] = arr[cur_r][cur_c],arr[next_r][next_c]
+                if check_b(next_r,next_c,N) and (arr[next_r][next_c] == 4 or arr[next_r][next_c] == 3):
+                    if arr[next_r][next_c] ==4:
+                        arr[next_r][next_c],arr[cur_r][cur_c] = arr[cur_r][cur_c],arr[next_r][next_c]
                     man_pos[i] = (next_r,next_c)
         else:
             cur_r, cur_c = man_pos[i]
@@ -106,7 +113,8 @@ def move_to_line(man_pos,arr,N):
             arr[to_next_r][to_next_c], arr[cur_r][cur_c] = arr[cur_r][cur_c], arr[to_next_r][to_next_c]
             to_next_r, to_next_c = temp_pos
 
-    
+
+
 
 def change_head(arr,man_pos):
     head_r,head_c = man_pos[0]
@@ -122,11 +130,16 @@ def find_man_pos(arr,N): # 초기 팀의 모든 좌표를 알아낸다.
     def dfs(node,path): # dfs node가 찾는게 아니거나 조건에 어긋나면 return
         if node in visted or (not check_b(node[0],node[1],N)) or arr[node[0]][node[1]] == 4 or arr[node[0]][node[1]] == 0:
             return
+        if arr[node[0]][node[1]] == 3 and len(path) == 1:
+            return
+
         path.append(node) # 이후에는 방문에 추가 or 경로에 추가후
         visted.add(node)
         cur_r, cur_c = node
         for sr, sc in zip(dr, dc): # 4방 탐색 후 바로 다음 dfs 진행. bfs랑 다르게 넣기 전에 굳이볼필요x
+
             next_r, next_c = cur_r + sr, cur_c + sc
+
             dfs((next_r,next_c),path)
 
 
@@ -204,6 +217,13 @@ def ball_move(sr,sc,dir,N,tot_team): # 맞춘팀과 점수를 반환한다.
 - 맞춘팀과 점수를 구한다. 총 점수에 더한다.
 - 맞춘팀의 방향을 바꾼다. 공백이거나 점수가 0이면 cancel한다. 
 
+
+생긴 문제: 
+순횐하는 경우
+잘 모를때는 무조건 문제 부터 보자. 3명 이상이 한팀 즉 2는 무조건 있음. 
+1) 팀 순서를 잘못구한다. 1->3 -> 2... => 이유: 3도 먼저 들어갈 수 있음.
+2) 움직임을 못한다. 
+
 '''
 
 def game_logic(N,arr,Round,K):
@@ -216,14 +236,21 @@ def game_logic(N,arr,Round,K):
 
         for team in tot_team:
             move_to_line(team, arr, N)
+
         sr,sc,dir= ball_move_init(Round, N)
         score,heat_team_idx= ball_move(sr, sc, dir, N, tot_team)
         tot_score += score
         if heat_team_idx != -1:
             tot_team[heat_team_idx] = change_head(arr,tot_team[heat_team_idx])
-
+        '''
+        print("========",Round,"===========")
+        print_arr(arr)
+        print(sc,sr,dir,tot_team[heat_team_idx],score)
+        '''
         if Round == K:
             break
+
+
         Round += 1
     return tot_score
 
