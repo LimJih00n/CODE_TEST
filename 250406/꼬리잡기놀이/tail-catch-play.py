@@ -157,8 +157,10 @@ def ball_move_init(Round,N): # ball의 방향과 시작점을 반환한다.
 
     mode_Round = Round % N if (Round % N) != 0 else N
 
+    Round %= (4*N)
+
     if Round > 4*N:
-        Round -= 4*N
+        Round %= (4*N)
 
 
     if 1<=Round<=N:
@@ -167,7 +169,7 @@ def ball_move_init(Round,N): # ball의 방향과 시작점을 반환한다.
         return N-1,mode_Round-1,(-1,0)
     elif 2*N+1<=Round<=3*N:
         return N-mode_Round,N-1,(0,-1)
-    elif 3 * N + 1 <= Round <= 4 * N:
+    elif 3 * N + 1 <= Round < 4 * N or Round==0:
         return 0,N-mode_Round,(1,0)
 
 def ball_move(sr,sc,dir,N,tot_team): # 맞춘팀과 점수를 반환한다.
@@ -237,16 +239,19 @@ def game_logic(N,arr,Round,K):
         for team in tot_team:
             move_to_line(team, arr, N)
 
+
         sr,sc,dir= ball_move_init(Round, N)
         score,heat_team_idx= ball_move(sr, sc, dir, N, tot_team)
         tot_score += score
         if heat_team_idx != -1:
             tot_team[heat_team_idx] = change_head(arr,tot_team[heat_team_idx])
+
         '''
-        print("========",Round,"===========")
+        print("========", "Hit", "===========")
         print_arr(arr)
         print(sc,sr,dir,tot_team[heat_team_idx],score)
         '''
+        
         if Round == K:
             break
 
