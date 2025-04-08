@@ -94,11 +94,11 @@ def DICE_MOVE(r,c,dir,N):
 
     ref_dir = [2,3,0,1] # 반대로 돌아가는 경우. 리스트에 바꿔야하는 방향 index를 넣어두면 간결하게 사용가능하다.
     # 0<->2 // 1<->3
-    
+
     nr,nc,ndir = move_dir[dir][0]+r,move_dir[dir][1]+c,dir
     if not check_N(nr,nc,N):
         ndir = ref_dir[dir]
-        nr, nc = move_dir[dir][0] + r, move_dir[dir][1]+c
+        nr, nc = move_dir[ndir][0] + r, move_dir[ndir][1]+c
         return nr,nc,ndir
     return nr,nc,ndir
 
