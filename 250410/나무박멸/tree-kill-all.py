@@ -142,7 +142,7 @@ def update_death(arr,N):
         for c in range(N):
             if arr[r][c] == -2:
                 new_arr[r][c] = 0
-            elif arr[r][c] < -3:
+            elif arr[r][c] <= -3:
                 new_arr[r][c] +=1
     return new_arr
             
