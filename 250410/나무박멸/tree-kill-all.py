@@ -127,11 +127,12 @@ def kill_the_tree(arr,r,c,N,K,C):
 
         for k in range(K):
             nr,nc = cr+move[0],cc+move[1]
-            if not check_B(nr,nc,N):
+            if not check_B(nr,nc,N) or  arr[nr][nc] == -1:
                 break
-            if arr[nr][nc] == 0 or arr[nr][nc] == -1:
+            if arr[nr][nc] == 0:
                 new_arr[nr][nc] = -C
                 break
+            
             new_arr[nr][nc] = -C
             cr,cc =nr,nc
     return new_arr 
