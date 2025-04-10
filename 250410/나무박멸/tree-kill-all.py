@@ -187,13 +187,13 @@ def game_logic(arr,N,M,K,C):
     for m in range(M):
         
         
-        
+        arr = update_death(arr,N)
         
         arr = grow_tree(arr,N)
         arr = make_tree(arr,N)
         
         
-        arr = update_death(arr,N)
+        
         r,c,score= find_max_d_tree(arr,N,K,C)
         if score==0:
             break
