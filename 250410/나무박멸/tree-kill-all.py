@@ -4,6 +4,15 @@
 벽이 있는 경우 전파되지 않는다.
 k의 범위만큼 대각선으로 퍼진다. 
 
+피드백
+문제 해석의 문제:
+나무가 하나도 없는경우 == 제초제로 없어진 경우도 포함해야하는데 이경우를 안시킴
+
+모든 경우를 잘 고려하나 따져보기 일단 문제를 잘 해석하는 것을 우선으로 하기!
+-> 조건을 더 세부적으로 정리하기. 어떨때 어떻다. 
+
+
+
 각 턴당
 1. 성장 => 주위의 나무 수칸큼 성장
 2. 번식 => 주위4칸에 번식. ->
@@ -43,17 +52,18 @@ def check_B(r,c,N):
     return False
 
 def grow_tree(arr,N):
-    
+    new_arr = [row[:] for row in arr]
     for r in range(N):
         for c in range(N):
             if arr[r][c]<=0:
                 continue
-            g_count = 0 
+            g_count = 0
             for sr,sc in zip(dr,dc):
                 nr,nc = r+sr,c+sc 
                 if check_B(nr,nc,N) and arr[nr][nc] >0:
                     g_count+=1
-            arr[r][c] += g_count 
+            new_arr[r][c] += g_count 
+    return new_arr
     
 
 def make_tree(arr,N):
@@ -63,14 +73,12 @@ def make_tree(arr,N):
         for c in range(N):
             if arr[r][c]<=0:
                 continue
-            g_count = 0 
             n_count = 0
             for sr,sc in zip(dr,dc):
                 nr,nc = r+sr,c+sc 
-                if check_B(nr,nc,N) and arr[nr][nc] >0:
-                    g_count+=1
                 if check_B(nr,nc,N) and arr[nr][nc] ==0:
                     n_count+=1
+            
             for sr,sc in zip(dr,dc):
                 nr,nc = r+sr,c+sc 
                 if check_B(nr,nc,N) and arr[nr][nc]==0:
@@ -101,7 +109,7 @@ def find_max_d_tree(arr,N,K,C): # 대각선으로 쭉 퍼져가야한다.
                     nr,nc = cr+move[0],cc+move[1]
                     if not check_B(nr,nc,N):
                         break
-                    if  arr[nr][nc] ==0 or arr[nr][nc] == -1:
+                    if  arr[nr][nc] ==0 or arr[nr][nc] <= -1:
                         break
                     if arr[nr][nc] >0:
                         d_count += arr[nr][nc] 
@@ -127,9 +135,9 @@ def kill_the_tree(arr,r,c,N,K,C):
 
         for k in range(K):
             nr,nc = cr+move[0],cc+move[1]
-            if not check_B(nr,nc,N) or  arr[nr][nc] == -1:
+            if not check_B(nr,nc,N) or arr[nr][nc] == -1:
                 break
-            if arr[nr][nc] == 0:
+            if arr[nr][nc] == 0 or arr[nr][nc]<=-2:
                 new_arr[nr][nc] = -C
                 break
             
@@ -177,22 +185,29 @@ def game_logic(arr,N,M,K,C):
     ans = 0
     C = C+2
     for m in range(M):
-        #print("start")
-        #print_simul(arr,m,N)
+        
+        
+        
+        
+        arr = grow_tree(arr,N)
+        arr = make_tree(arr,N)
+        
         
         arr = update_death(arr,N)
-        grow_tree(arr,N)
-        arr = make_tree(arr,N)
         r,c,score= find_max_d_tree(arr,N,K,C)
+        if score==0:
+            break
         
         ans += score 
-        
         arr = kill_the_tree(arr,r,c,N,K,C)
         
-        #print("end")
-        #print_simul(arr,m,N)
+        
+        
     print(ans)
     
+# 6+6+17
+# 17+6+4
+
 
 
 N,M,K,C = map(int,input().split())
