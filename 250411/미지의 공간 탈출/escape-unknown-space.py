@@ -189,8 +189,8 @@ def find_sr_sc(arr):
             if arr[r][c] == 2:
                 return r,c
 def find_MR_MC(arr):
-    for r in range(M):
-        for c in range(M):
+    for r in range(N):
+        for c in range(N):
             if arr[r][c] == 3:
                 return r,c
 def find_GR_GC(arr):
