@@ -89,7 +89,7 @@ def move_new_dem(r,c,dim,M,MR,MC):
                 nr, nc, ndim = MR+c, MC-1, 5
     return  nr,nc,ndim
 
-def time_move(r,c,dir,dim_dic):
+def time_move(r,c,dir,dim_dic,N):
     move_dir = [
         (0,1),
         (0,-1),
@@ -99,6 +99,8 @@ def time_move(r,c,dir,dim_dic):
     ]
     dim_dic[5][r][c] = 1
     nr,nc = r+move_dir[dir][0],c+move_dir[dir][1]
+    if not check_B(nr,nc,N):
+        return r, c, 4
     if dim_dic[5][nr][nc] == 0:
         return nr,nc,dir
     return r,c ,4
@@ -133,7 +135,7 @@ def simul(start_node,time_p_list,M,N,MR,MC,GR,GC,dim_dic):
             p = time_p_list[i]
             if cur_time % p[4] ==0:
 
-                r,c,d = time_move(p[0], p[1], p[2], dim_dic)
+                r,c,d = time_move(p[0], p[1], p[2], dim_dic,N)
                 if cur_time == 0:
                     new_t = p[3]
                 else:
