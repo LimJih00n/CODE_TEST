@@ -192,8 +192,8 @@ def find_MR_MC(arr):
             if arr[r][c] == 3:
                 return r,c
 def find_GR_GC(arr):
-    for r in range(M):
-        for c in range(M):
+    for r in range(N):
+        for c in range(N):
             if arr[r][c] == 4:
                 return r,c
 
@@ -214,6 +214,9 @@ dim_dic[4] = [list(map(int,input().split())) for _ in range(M)]
 dim_dic[1] = [list(map(int,input().split())) for _ in range(M)]
 dim_dic[3] = [list(map(int,input().split())) for _ in range(M)]
 dim_dic[0]= [list(map(int,input().split())) for _ in range(M)]
+
+
+
 time_p_list = [list(map(int,input().split())) for _ in range(F)]
 new_time_p_list = []
 for p in time_p_list:
