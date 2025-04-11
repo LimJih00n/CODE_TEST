@@ -3,7 +3,8 @@
 <<python 에서는 [-1] 도 계산이된다. 무언가를 넣을때 항상 범위를 cehck하고 넣기!>>
 <<공격을 "한" 전사수이다. 죽은 전사수가 아니다. 그러나 죽은 전사에는 둘다 포함 시켜야한다.>>
 => 먼가 이상할때는 문제와 내 로직을 더 잘 비교하자
-
+<<거리 update할때 값을 update안함. max min 구할때 실 수 조심>>
+<<초반에 문제 읽을때 놓침. 전사의 두번쩨 이동은 좌우상하이다. ->
 -----------------------------------------------------------------------
 문제이해
 0~N-1 범위로 이루어진 NxN 크기, 메두가
@@ -37,7 +38,7 @@ M명의 전사가 마을에 도착. r,c에 위치한다. 최단경로로 이동�
  1) "거리를 줄일 수 있는" 방향으로 이동한다. 한칸. 상하좌우 우선순위
  2) 격자 밖으로는 나갈 수 없다. 시애에 들어오는 곳으로 이동할 수 없다
 <이종2>
- 1) "거리를 줄일 수 있는" 방향으로 이동한다. 한칸. 상하좌우 우선순위
+ 1) "거리를 줄일 수 있는" 방향으로 이동한다. 한칸. 상하좌우 우선순위 -> 여기서 실수. 문제 하나 하나 꼼꼼히. 함정카드 였음.
  2) 격자 밖으로는 나갈 수 없다. 시애에 들어오는 곳으로 이동할 수 없다
 
 4. 전사의 공격
@@ -283,14 +284,22 @@ def take_dist_arr(N,G_r,G_c,arr): # 공원에서 시작해 메두사까지의 �
 
     return  dis_arr
 
-def war_move(N,war_po,M_r,M_c,tot_seen_a):
+def war_move(N,war_po,M_r,M_c,tot_seen_a, move_count):
     #전사를 한칸 이동시킨다. 거리가 짧아지는, 안벗어나는+ 시야에 안들어오는
-    move_dir = [
-        (-1, 0),
-        (1, 0),
-        (0, -1),
-        (0, 1)
-    ]
+    if move_count == 0:
+        move_dir = [
+            (-1, 0),#상
+            (1, 0), #하
+            (0, -1),#좌
+            (0, 1)#우
+        ]
+    else:
+        move_dir = [
+            (0, -1),#좌
+            (0, 1),#우
+            (-1, 0),#상
+            (1, 0), #하
+        ]
     cur_r,cur_c = war_po
     cur_dist =  compute_man_dist(cur_r,cur_c,M_r,M_c)
     next_po = war_po
@@ -301,6 +310,7 @@ def war_move(N,war_po,M_r,M_c,tot_seen_a):
             next_po = (nr,nc)
             cur_dist = dist
     return next_po
+
 
 def take_war_move(war_pos,non_stone_war_pos,M_r,M_c,N,tot_seen_a):
     #움직인 거리를 구한다. 전사들의 거리를 update 한다.
@@ -313,8 +323,8 @@ def take_war_move(war_pos,non_stone_war_pos,M_r,M_c,N,tot_seen_a):
         po = war_pos[i]
         cur_dist = compute_man_dist(po[0],po[1],M_r,M_c)
         if po in non_stone_war_pos: #돌이 안된 경우에.
-            new_po = war_move(N, po, M_r, M_c, tot_seen_a)
-            new_po = war_move(N, new_po, M_r, M_c, tot_seen_a)
+            new_po = war_move(N, po, M_r, M_c, tot_seen_a,0)
+            new_po = war_move(N, new_po, M_r, M_c, tot_seen_a,1)
             tot_move_dist += (cur_dist - compute_man_dist(new_po[0],new_po[1],M_r,M_c))
             war_pos[i] = new_po
     return war_pos,tot_move_dist
@@ -396,6 +406,15 @@ def game_logic(G_r,G_c,sr,sc,arr,N,war_pos):
         cur_stone_count,tot_seen_area,tot_none_stone_pos = det_dir(war_pos,cr,cc,N) # 방향을 결정하고 바라본다.
 
         war_pos,tot_move_dist = take_war_move(war_pos, tot_none_stone_pos, cr, cc, N, tot_seen_area)
+
+        '''
+        print("============================")
+        print("cur_me:",cr,cc)
+        print_seen_area(tot_seen_area,N)
+        print(war_pos)
+        print(tot_none_stone_pos)
+        print("============================")
+        '''
         cur_move_count += tot_move_dist
         war_pos,death_count = take_death_war(war_pos,cr, cc)
         cur_death_count += death_count
