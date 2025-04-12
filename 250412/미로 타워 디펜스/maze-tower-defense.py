@@ -203,9 +203,9 @@ def make_new_mar_using_cons_grop(arr,cons_group):
 def spell_blizard(R,C,dir,S,arr,N, boom_mar_list):
     move_dir = [
         (0, 1),
-        (-1,0),
-        (0, -1),
         (1,0),
+        (0, -1),
+        (-1,0),
 
 
     ]
@@ -233,7 +233,7 @@ def game_logic(init_arr,N,M,magic_info):
 
         dir,S = info
         arr = spell_blizard(R, C, dir, S, arr, N, boom_mar_list)
-        
+        #print_arr(arr)
         arr = move_till_marble(arr, tor_path)
         arr,is_boom = boom_cons_marble(arr, tor_path, boom_mar_list)
         while is_boom:
@@ -250,7 +250,7 @@ def game_logic(init_arr,N,M,magic_info):
     ans = 0
     for i in range(1,4):
         ans += boom_mar_list[i]*i
-    
+
     print(ans)
 
 #다 차있는 경우 에대한 예외처리나 check가 필요할 듯
